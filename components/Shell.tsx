@@ -21,7 +21,7 @@ export function Navbar() {
   const account = user ? (
     <span className="store-user">
       <a href="/my-learning" className="navbar__login">My learning</a>
-      <button type="button" onClick={() => logout()}>Log out</button>
+      <a href="/account" className="navbar__login" title={user.email || ""}>Account</a>
     </span>
   ) : (
     <>

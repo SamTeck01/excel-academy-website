@@ -136,3 +136,14 @@
   .lms__toggle { display: block; width: 100%; padding: 10px; border: 0; background: var(--soft); border-radius: 8px; font: 600 14px var(--font); cursor: pointer; }
   .lms__contents:not(.is-open) details { display: none; }
 }
+
+/* Account */
+.account__grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); }
+.account__card { background: #fff; border: 1px solid var(--line-2); border-radius: 16px; padding: 24px; display: grid; gap: 12px; align-content: start; }
+.account__card h2 { margin: 0; font-size: 18px; color: var(--ink); }
+.account__card p { margin: 0; color: var(--muted); font-size: 14px; }
+.account__card label { display: grid; gap: 6px; font-size: 13px; color: var(--muted); }
+.account__card .btn { justify-self: start; }
+.account__orders ul { list-style: none; margin: 0; padding: 0; }
+.account__orders li { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.account__orders small { color: var(--muted); }

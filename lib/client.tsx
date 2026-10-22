@@ -6,9 +6,12 @@
 import { initializeApp, getApps } from "firebase/app";
 import {
   getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail,
-  signInWithPopup, GoogleAuthProvider, updateProfile, signOut, type User,
+  signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, updateProfile, signOut, type User,
 } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore/lite";
+export { updateProfile };
+export const profileRef = (uid: string) => doc(fs, "users", uid);
+export { setDoc };
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { API, type Course } from "./catalogue";
 
@@ -107,6 +110,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       const saved = JSON.parse(localStorage.getItem("ea-cart") || "[]");
       if (Array.isArray(saved)) setCart(saved);
     } catch {}
+    // Back from a Google redirect sign-in: make sure the profile exists.
+    getRedirectResult(auth).then((r) => r && ensureProfile(r.user)).catch(() => {});
     return onAuthStateChanged(auth, (u) => {
       setUser(u);
       setReady(true);
@@ -146,9 +151,18 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         await after();
       },
       google: async () => {
-        const { user: u } = await signInWithPopup(auth, new GoogleAuthProvider());
-        await ensureProfile(u);
-        await after();
+        try {
+          const { user: u } = await signInWithPopup(auth, new GoogleAuthProvider());
+          await ensureProfile(u);
+          await after();
+        } catch (e) {
+          // Pop-ups blocked (common on phones): sign in by redirect instead.
+          if ((e as { code?: string }).code === "auth/popup-blocked" || (e as { code?: string }).code === "auth/operation-not-supported-in-this-environment") {
+            await signInWithRedirect(auth, new GoogleAuthProvider());
+            return;
+          }
+          throw e;
+        }
       },
       resetPassword: (email) => sendPasswordResetEmail(auth, email),
       logout: async () => {
