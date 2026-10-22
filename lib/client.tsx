@@ -50,7 +50,12 @@ export const authError = (e: unknown) =>
     "auth/too-many-requests": "Too many attempts. Wait a moment and try again.",
     "auth/network-request-failed": "No internet connection.",
     "auth/popup-closed-by-user": "",
-  }) as Record<string, string>)[(e as { code?: string }).code || ""] ?? "Something went wrong. Please try again.";
+    "auth/cancelled-popup-request": "",
+    "auth/unauthorized-domain": "Google sign-in isn't enabled for this web address yet. Use email and password, or try again later.",
+    "auth/account-exists-with-different-credential": "This email already has an account - log in with your password instead.",
+    "auth/user-disabled": "This account has been deactivated. Contact Excel Academy for help.",
+    "auth/operation-not-allowed": "This sign-in method isn't available. Use email and password.",
+  }) as Record<string, string>)[(e as { code?: string }).code || ""] ?? `Something went wrong (${(e as { code?: string }).code || "unknown"}). Please try again.`;
 
 /** The same profile document the app creates at sign-up. */
 async function ensureProfile(user: User, name?: string) {
