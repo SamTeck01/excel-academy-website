@@ -1,0 +1,186 @@
+/* Motion & micro-interactions. Loaded last on every page.
+   Everything here is switched off for people who prefer reduced motion (see bottom),
+   and scroll reveals only apply once motion.js has run, so no content can stay hidden. */
+
+:root {
+  --ease-out: cubic-bezier(.22, 1, .36, 1);
+  --ease-spring: cubic-bezier(.34, 1.56, .64, 1);
+}
+
+/* ---------- Scroll reveal ---------- */
+.motion .reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .8s var(--ease-out), transform .8s var(--ease-out);
+  transition-delay: var(--d, 0ms);
+}
+.motion .reveal--left { transform: translateX(-36px); }
+.motion .reveal--right { transform: translateX(36px); }
+.motion .reveal--zoom { transform: scale(.94); }
+.motion .reveal.is-visible { opacity: 1; transform: none; }
+
+/* ---------- Hero entrance ---------- */
+.motion .hero__title,
+.motion .hero__copy,
+.motion .hero__cta,
+.motion .hero__media { animation: rise .9s var(--ease-out) both; }
+.motion .hero__copy { animation-delay: .12s; }
+.motion .hero__cta { animation-delay: .22s; }
+.motion .hero__media { animation-delay: .32s; }
+@keyframes rise { from { opacity: 0; transform: translateY(24px); } }
+
+/* Underline draws itself under the headline */
+.motion .hero__underline img {
+  clip-path: inset(0 100% 0 0);
+  animation: draw 1s .55s var(--ease-out) forwards;
+}
+@keyframes draw { to { clip-path: inset(0 0 0 0); } }
+
+/* Medal / emoji gives a little wave */
+.motion .hero__medal {
+  display: inline-block;
+  transform-origin: 50% 80%;
+  animation: wiggle 1.4s 1.1s var(--ease-out) both;
+}
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0); }
+  20% { transform: rotate(-14deg) scale(1.15); }
+  40% { transform: rotate(10deg); }
+  60% { transform: rotate(-6deg); }
+  80% { transform: rotate(3deg); }
+}
+
+/* Hero image: gentle zoom on hover */
+.hero__media { overflow: visible; }
+.hero__img, .about__banner { transition: transform 1.2s var(--ease-out), box-shadow .4s; }
+.hero__media:hover .hero__img { transform: scale(1.012); }
+
+/* Floating stat pills */
+.motion .stat-pills { animation: float 6s ease-in-out 1.2s infinite; }
+@keyframes float { 50% { transform: translateY(-10px); } }
+
+/* ---------- Navbar ---------- */
+.navbar { transition: box-shadow .3s, background-color .3s; }
+.navbar.is-scrolled { box-shadow: 0 6px 24px rgba(17, 24, 39, .07); }
+@media (min-width: 1100px) {
+  .navbar__links > a { position: relative; }
+  .navbar__links > a::after {
+    content: ""; position: absolute; left: 17px; right: 17px; bottom: 2px; height: 2px;
+    border-radius: 2px; background: var(--orange);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform .35s var(--ease-out);
+  }
+  .navbar__links > a:hover::after { transform: scaleX(1); }
+  .navbar__links > a.is-active::after { display: none; }
+}
+.navbar__links > a { transition: color .2s, background-color .2s, transform .2s; }
+
+/* ---------- Buttons ---------- */
+.btn { position: relative; overflow: hidden; isolation: isolate; transition: background-color .25s, transform .25s var(--ease-spring), box-shadow .25s; }
+.btn--primary:hover { transform: translateY(-2px); box-shadow: 0 10px 22px -8px rgba(245, 134, 52, .65); }
+.btn--primary:active { transform: translateY(0) scale(.97); box-shadow: none; }
+/* Shine sweep */
+.btn--primary::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, .35) 50%, transparent 70%);
+  transform: translateX(-120%);
+}
+.btn--primary:hover::before { transform: translateX(120%); transition: transform .7s var(--ease-out); }
+/* Click ripple (span added by motion.js) */
+.ripple {
+  position: absolute; border-radius: 50%; pointer-events: none;
+  background: rgba(255, 255, 255, .45);
+  transform: scale(0); animation: ripple .6s var(--ease-out) forwards;
+}
+@keyframes ripple { to { transform: scale(2.6); opacity: 0; } }
+
+/* ---------- Cards ---------- */
+.feature-card, .testimonial, .pd-card, .blog-card, .track__card {
+  transition: transform .45s var(--ease-out), box-shadow .45s var(--ease-out), border-color .3s;
+}
+.feature-card:hover, .pd-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 22px 40px -18px rgba(17, 24, 39, .18);
+  border-color: #ffe2cc;
+}
+.feature-card__icon { transition: transform .5s var(--ease-spring); }
+.feature-card:hover .feature-card__icon { transform: rotate(-8deg) scale(1.1); }
+.feature-card__art img { transition: transform 1.2s var(--ease-out); }
+.feature-card--wide:hover .feature-card__art img { transform: scale(1.05); }
+
+.testimonial:hover { transform: translateY(-4px); box-shadow: 0 18px 34px -18px rgba(17, 24, 39, .2); }
+.testimonial__avatar { transition: transform .4s var(--ease-spring); }
+.testimonial:hover .testimonial__avatar { transform: scale(1.1); }
+
+.track__card:hover { transform: translateY(-4px); }
+.track__stats dt { font-variant-numeric: tabular-nums; }
+
+/* Course rows: image zoom inside its rounded frame */
+.course-row__img { transition: transform 1s var(--ease-out), box-shadow .5s; }
+.course-row:hover .course-row__img { transform: scale(1.02); box-shadow: 0 24px 40px -22px rgba(17, 24, 39, .35); }
+.course-row__logo { transition: transform .5s var(--ease-spring); }
+.course-row:hover .course-row__logo { transform: scale(1.12) rotate(-4deg); }
+
+/* Staff portrait */
+.staff__photo { transition: transform .8s var(--ease-out); }
+.staff__photo:hover { transform: scale(1.04) rotate(-2deg); }
+
+/* ---------- Segmented tabs: sliding pill ---------- */
+.segmented { position: relative; }
+.segmented button { position: relative; z-index: 1; }
+.segmented__thumb {
+  position: absolute; top: 4px; bottom: 4px; left: 0; z-index: 0;
+  border-radius: 99px; background: #fff;
+  box-shadow: 0 3px 1px rgba(0, 0, 0, .04), 0 3px 6px rgba(0, 0, 0, .12);
+  transition: transform .45s var(--ease-out), width .45s var(--ease-out);
+}
+.segmented.has-thumb button[aria-selected="true"] { background: transparent; box-shadow: none; border-color: transparent; }
+.course-panel:not([hidden]) { animation: rise .6s var(--ease-out) both; }
+
+/* ---------- Carousel ---------- */
+.carousel__btn { transition: transform .3s var(--ease-spring), box-shadow .3s, opacity .2s; }
+.carousel__btn:hover:not(:disabled) { transform: scale(1.1); box-shadow: 0 8px 16px rgba(87, 87, 87, .25); }
+.carousel__btn:active:not(:disabled) { transform: scale(.94); }
+
+/* ---------- FAQ: smooth open ---------- */
+.faq__item { transition: box-shadow .3s, transform .3s var(--ease-out); }
+.faq__item:hover { box-shadow: 0 8px 18px rgba(51, 51, 51, .12); }
+.faq__item summary { transition: color .2s; }
+.faq__item summary:hover { color: var(--orange); }
+.faq__answer { overflow: hidden; transition: height .4s var(--ease-out), opacity .4s; }
+.faq__item[open] .faq__answer { animation: fade-in .4s var(--ease-out); }
+@keyframes fade-in { from { opacity: 0; transform: translateY(-6px); } }
+
+/* ---------- Forms ---------- */
+.field input, .field textarea { transition: border-color .2s, box-shadow .25s, background-color .2s; }
+.field input:focus, .field textarea:focus { background: #fff; }
+.contact__interests input { transition: background-color .2s, border-color .2s, transform .25s var(--ease-spring); }
+.contact__interests input:checked { transform: scale(1.12); }
+.contact__interests label:hover input { border-color: var(--orange); }
+.contact__status { transition: opacity .3s; }
+
+/* ---------- Footer & links ---------- */
+.footer__col a { display: inline-block; transition: color .2s, transform .25s var(--ease-out); }
+.footer__col a:hover { transform: translateX(4px); }
+.footer__social a img, .footer__social a svg { transition: transform .3s var(--ease-spring); }
+.footer__social a:hover img, .footer__social a:hover svg { transform: scale(1.2) rotate(-6deg); }
+.contact-details li { transition: transform .3s var(--ease-out); }
+.contact-details li:hover { transform: translateX(6px); }
+
+/* ---------- Mission quote marks ---------- */
+.motion .mission__quote.is-visible .mission__mark { animation: pop .7s var(--ease-spring) both; }
+.motion .mission__quote.is-visible .mission__mark--end { animation-delay: .5s; }
+@keyframes pop { from { opacity: 0; transform: scale(.4) rotate(-20deg); } }
+
+/* ---------- Scroll progress bar ---------- */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 60;
+  background: var(--orange); transform-origin: left; transform: scaleX(0);
+  pointer-events: none;
+}
+
+/* ---------- Respect reduced-motion preferences ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .motion .reveal { opacity: 1 !important; transform: none !important; }
+  .scroll-progress, .ripple { display: none; }
+}
