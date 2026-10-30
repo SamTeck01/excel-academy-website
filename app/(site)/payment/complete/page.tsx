@@ -31,14 +31,14 @@ export default function PaymentComplete() {
         <>
           <h1>Payment confirmed 🎉</h1>
           <p>Your course is unlocked here and in the Excel Academy app.</p>
-          <a className="btn btn--primary" href={course ? `/learn/${course}` : "/my-learning"}>Start learning</a>
+          <a className="btn btn--primary" href={course ? `/learn/${course}` : "/dashboard/courses"}>Start learning</a>
         </>
       )}
       {state === "pending" && (
         <>
           <h1>Payment received</h1>
           <p>If you were charged, your course unlocks within a few minutes. Check My learning shortly.</p>
-          <a className="btn btn--primary" href="/my-learning">Go to My learning</a>
+          <a className="btn btn--primary" href="/dashboard">Go to My learning</a>
         </>
       )}
     </main>

@@ -17,7 +17,7 @@ export default function AccountPage() {
   useEffect(() => {
     if (!ready) return;
     if (!user) {
-      location.href = "/login?next=/account";
+      location.href = "/login?next=/dashboard/account";
       return;
     }
     setName(user.displayName || "");

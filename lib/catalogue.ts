@@ -4,23 +4,23 @@
  */
 export const API = (process.env.NEXT_PUBLIC_API_URL || "https://excel-academy-api-deic.onrender.com/api").replace(/\/$/, "");
 
-export type Programme = { code: string; name: string; logo?: string; levels: string[] };
+export type Programme = { code: string; name: string; logo?: string; /** Figma programme card artwork. */ art?: string; levels: string[] };
 
 export const PROGRAMMES: Programme[] = [
-  { code: "ICAN", name: "Institute of Chartered Accountants of Nigeria (ICAN)", logo: "/img/programs/ICAN.webp",
+  { code: "ICAN", name: "Institute of chartered accountants of Nigeria (ICAN)", logo: "/img/programs/ICAN.webp", art: "/img/figma/ICAN.webp",
     levels: ["ATS 1 LEVEL", "ATS 2 LEVEL", "ATS 3 LEVEL", "FOUNDATION LEVEL", "SKILLS LEVEL", "PROFESSIONAL LEVEL"] },
-  { code: "ACCA", name: "Association of Chartered Certified Accountants (ACCA)", logo: "/img/programs/ACCA.webp",
+  { code: "ACCA", name: "Association of Chartered Certified Accountants (ACCA)", logo: "/img/programs/ACCA.webp", art: "/img/figma/ACCA.webp",
     levels: ["APPLIED KNOWLEDGE LEVEL", "APPLIED SKILLS LEVEL", "STRATEGIC PROFESSIONAL LEVEL"] },
-  { code: "CIBN", name: "Chartered Institute of Banking of Nigeria (CIBN)", logo: "/img/programs/CIBN.webp",
+  { code: "CIBN", name: "Chartered Institute of Banking of Nigeria (CIBN)", logo: "/img/programs/CIBN.webp", art: "/img/figma/CIBN.webp",
     levels: ["DIPLOMA LEVEL", "INTERMEDIATE LEVEL", "CHARTERED BANKER LEVEL", "OTHER CERTIFICATIONS"] },
-  { code: "CFA", name: "Chartered Financial Analysts (CFA)", logo: "/img/programs/CFA.webp", levels: ["LEVEL 1", "LEVEL 2", "LEVEL 3"] },
-  { code: "CPA", name: "Certified Public Accountant (CPA)", logo: "/img/programs/CPA.webp", levels: [] },
-  { code: "CITN", name: "Chartered Institute of Taxation of Nigeria (CITN)", logo: "/img/programs/CITN.webp", levels: ["FOUNDATION LEVEL", "PT1 LEVEL", "PT2 LEVEL"] },
-  { code: "CIPM", name: "Chartered Institute of Personnel Management of Nigeria (CIPM)", logo: "/img/programs/CIPM.webp",
+  { code: "CFA", name: "Chartered Financial Analysts (CFA)", logo: "/img/programs/CFA.webp", art: "/img/figma/CFA.webp", levels: ["LEVEL 1", "LEVEL 2", "LEVEL 3"] },
+  { code: "CPA", name: "Certified Public Accountant (CPA)", logo: "/img/programs/CPA.webp", art: "/img/figma/CPA.webp", levels: [] },
+  { code: "CITN", name: "Chartered Institute of Taxation of Nigeria (CITN)", logo: "/img/programs/CITN.webp", art: "/img/figma/CITN.webp", levels: ["FOUNDATION LEVEL", "PT1 LEVEL", "PT2 LEVEL"] },
+  { code: "CIPM", name: "Chartered Institute of Personnel Management of Nigeria (CIPM)", logo: "/img/programs/CIPM.webp", art: "/img/figma/CIPM.webp",
     levels: ["FOUNDATION LEVEL", "INTERMEDIATE 1 LEVEL", "INTERMEDIATE 2 LEVEL", "PROFESSIONAL 1 LEVEL", "PROFESSIONAL 2 LEVEL"] },
-  { code: "ANAN", name: "Association of National Accountants of Nigeria (ANAN)", logo: "/img/programs/ANAN.webp", levels: [] },
-  { code: "CIS", name: "Chartered Institute of Stockbrokers (CIS)", logo: "/img/programs/CIS.webp", levels: ["LEVEL 1", "LEVEL 2"] },
-  { code: "CIMA", name: "Chartered Institute of Management Accountants (CIMA)", logo: "/img/programs/CIMA.webp", levels: ["LEVEL 1", "LEVEL 2"] },
+  { code: "ANAN", name: "Association of National Accountants of Nigeria (ANAN)", logo: "/img/programs/ANAN.webp", art: "/img/figma/ANAN.webp", levels: [] },
+  { code: "CIS", name: "Chartered Institute of Stockbrokers (CIS)", logo: "/img/programs/CIS.webp", art: "/img/figma/CIS.webp", levels: ["LEVEL 1", "LEVEL 2"] },
+  { code: "CIMA", name: "Chartered Institute of Management Accountants (CIMA)", logo: "/img/programs/CIMA.webp", art: "/img/figma/CIMA.webp", levels: ["LEVEL 1", "LEVEL 2"] },
   { code: "ICSAN", name: "Chartered Governance Institute of Nigeria (ICSAN)",
     levels: ["FOUNDATION LEVEL", "PRE-PROFESSIONAL LEVEL", "PROFESSIONAL PROGRAMME PART I LEVEL", "PROFESSIONAL PROGRAMME PART II LEVEL"] },
   { code: "CIIN", name: "Chartered Insurance Institute of Nigeria (CIIN)", levels: ["FOUNDATION LEVEL", "INTERMEDIATE LEVEL", "ASSOCIATESHIP LEVEL"] },

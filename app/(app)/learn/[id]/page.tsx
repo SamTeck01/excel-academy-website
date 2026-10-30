@@ -81,7 +81,7 @@ export default function LearnPage({ params }: { params: { id: string } }) {
   return (
     <main className="lms">
       <div className="lms__player">
-        <p className="crumb"><a href="/my-learning">← My learning</a></p>
+        <p className="crumb"><a href="/dashboard">← My learning</a></p>
         <h1>{course.title}</h1>
         {current && (
           <>

@@ -20,8 +20,8 @@ export function Navbar() {
 
   const account = user ? (
     <span className="store-user">
-      <a href="/my-learning" className="navbar__login">My learning</a>
-      <a href="/account" className="navbar__login" title={user.email || ""}>Account</a>
+      <a href="/dashboard" className="navbar__login">Dashboard</a>
+      <a href="/dashboard/account" className="navbar__login" title={user.email || ""}>Account</a>
     </span>
   ) : (
     <>
@@ -56,6 +56,13 @@ export function Navbar() {
           </button>
           {account}
         </div>
+        {/* Phones: the cart sits next to the menu button (the desktop actions are hidden). */}
+        <button type="button" className="cart-btn cart-btn--mobile" aria-label={`Cart, ${cart.length} items`} onClick={() => setCartOpen(true)}>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+            <path d="M6 7h12l-1 13H7L6 7Z" /><path d="M9 7a3 3 0 0 1 6 0" />
+          </svg>
+          {cart.length > 0 && <span className="cart-btn__count">{cart.length}</span>}
+        </button>
         <button className="navbar__toggle" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
           <span /><span /><span />
         </button>

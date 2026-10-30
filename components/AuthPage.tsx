@@ -7,8 +7,8 @@ import { useStore } from "@/lib/client";
 export function AuthPage({ mode }: { mode: "in" | "up" }) {
   const { user, ready } = useStore();
   const next = () => {
-    const to = new URLSearchParams(location.search).get("next") || "/my-learning";
-    location.href = to.startsWith("/") ? to : "/my-learning";
+    const to = new URLSearchParams(location.search).get("next") || "/dashboard";
+    location.href = to.startsWith("/") && !to.startsWith("//") ? to : "/dashboard";
   };
   useEffect(() => {
     if (ready && user) next();

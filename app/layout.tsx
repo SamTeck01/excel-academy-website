@@ -1,13 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
 import "./styles.css";
 import "./pages.css";
 import "./motion.css";
 import "./store.css";
 import "./app.css";
+import "./figma.css";
+import "./portal.css";
 import { StoreProvider } from "@/lib/client";
-import { AuthDialog, CartDrawer, Navbar } from "@/components/Shell";
-import { Footer } from "@/components/site/Footer";
+import { AuthDialog, CartDrawer } from "@/components/Shell";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://excelacademyonline.com"),
@@ -19,6 +19,7 @@ export const metadata: Metadata = {
 };
 export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#f58634" };
 
+/** Shared by the public site and the student app: fonts, account, cart, sign-in dialog. */
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -32,15 +33,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <StoreProvider>
-          <Navbar />
           {children}
-          <Footer />
           <AuthDialog />
           <CartDrawer />
         </StoreProvider>
-        {/* Menu, FAQ, testimonial carousel, contact-to-WhatsApp and motion (from the Figma build). */}
-        <Script src="/js/main.js" strategy="afterInteractive" />
-        <Script src="/js/motion.js" strategy="afterInteractive" />
       </body>
     </html>
   );

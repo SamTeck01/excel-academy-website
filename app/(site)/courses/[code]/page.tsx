@@ -2,16 +2,17 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PROGRAMMES, getCatalogue, programme, programmeOf } from "@/lib/catalogue";
 import { ProgrammeCourses } from "@/components/ProgrammeCourses";
+import { PhotoHero } from "@/components/PhotoHero";
 
 export const revalidate = 300;
 export const generateStaticParams = () => PROGRAMMES.map((p) => ({ code: p.code.toLowerCase() }));
 
 export function generateMetadata({ params }: { params: { code: string } }): Metadata {
   const p = programme(params.code);
-  return p ? { title: `${p.code} Courses | Excel Academy`, description: `Online lectures, notes and mock exams for ${p.name}.` } : {};
+  return p ? { title: `${p.code === "PD" ? "Professional Development" : p.code} Courses | Excel Academy`, description: `Online lectures, notes and mock exams for ${p.name}.` } : {};
 }
 
-/** Figma "Courses/ ICAN": level tabs, Full/Revision package, course cards. */
+/** Figma "Courses/ ICAN". */
 export default async function ProgrammePage({ params }: { params: { code: string } }) {
   const p = programme(params.code);
   if (!p) notFound();
@@ -19,16 +20,14 @@ export default async function ProgrammePage({ params }: { params: { code: string
 
   return (
     <main>
-      <section className="program-hero">
-        <div className="container">
-          <a href="/courses" className="crumb">← All programs</a>
-          <p className="program-hero__eyebrow">Great!, you made the right choice😎</p>
-          <h1>{p.name}</h1>
-        </div>
-      </section>
-      <section className="container section" style={{ paddingTop: 16 }}>
-        <ProgrammeCourses levels={p.levels} courses={courses} />
-      </section>
+      <PhotoHero>
+        <p className="crumb"><a href="/courses">← All programs</a></p>
+        <h1 className="photo-hero__title--sm">Great!, you made the right choice😎</h1>
+        <p className="photo-hero__programme">{p.name}</p>
+      </PhotoHero>
+      <div className="container section" style={{ paddingTop: 8 }}>
+        <ProgrammeCourses code={p.code} levels={p.levels} courses={courses} />
+      </div>
     </main>
   );
 }

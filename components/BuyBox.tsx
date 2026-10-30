@@ -1,18 +1,34 @@
 "use client";
 import { useState } from "react";
-import { type Course, naira, thumb } from "@/lib/catalogue";
+import type { Course } from "@/lib/catalogue";
 import { api, useStore } from "@/lib/client";
 
-/** Price card on a course page: Add to cart / Buy now, or Continue learning. */
-export function BuyBox({ course }: { course: Course }) {
+/** Figma "Add to cart" / "Buy now" pair; "Continue learning" once enrolled. */
+export function BuyButtons({ course }: { course: Course }) {
   const { user, owned, requireLogin, addToCart, cart, setCartOpen, refreshOwned } = useStore();
   const [busy, setBusy] = useState(false),
     [err, setErr] = useState("");
-  const mine = owned.has(course.id);
   const inCart = cart.some((c) => c.id === course.id);
 
+  if (owned.has(course.id)) {
+    return (
+      <div className="buy-pair">
+        <a className="pill-btn pill-btn--solid" href={`/learn/${course.id}`}>Continue learning</a>
+      </div>
+    );
+  }
+
+  // Nothing to watch yet: no buying until the lessons are uploaded.
+  if (!course.lessonCount) {
+    return (
+      <div className="buy-pair">
+        <span className="pill-btn" aria-disabled="true">Coming soon - lessons are being uploaded</span>
+      </div>
+    );
+  }
+
   const buyNow = async () => {
-    if (!user) return requireLogin("Log in to buy this course", buyNow);
+    if (!user) return requireLogin(course.isFree ? "Log in to enroll in this course" : "Log in to buy this course", buyNow);
     setBusy(true);
     setErr("");
     try {
@@ -34,31 +50,16 @@ export function BuyBox({ course }: { course: Course }) {
   };
 
   return (
-    <div className="buy-box">
-      <img src={thumb(course)} alt="" />
-      {mine ? (
-        <>
-          <p className="buy-box__owned">✓ You're enrolled</p>
-          <a className="btn btn--primary" href={`/learn/${course.id}`}>Continue learning</a>
-        </>
-      ) : (
-        <>
-          <div className="buy-box__price">
-            <strong>{course.isFree ? "Free" : naira(course.price)}</strong>
-            {!course.isFree && course.cancelPrice && Number(course.cancelPrice) > Number(course.price) && <s>{naira(Number(course.cancelPrice))}</s>}
-          </div>
-          {!course.isFree && (
-            <button type="button" className="btn btn--ghost" onClick={() => (inCart ? setCartOpen(true) : (addToCart(course), setCartOpen(true)))}>
-              {inCart ? "In cart - view" : "Add to cart"}
-            </button>
-          )}
-          <button type="button" className="btn btn--primary" disabled={busy} onClick={buyNow}>
-            {busy ? "Please wait…" : course.isFree ? "Enroll for free" : "Buy now"}
-          </button>
-          {err && <p className="auth-error">{err}</p>}
-          <p className="buy-box__note">Secure payment by Paystack. Learn here or in the app with the same account.</p>
-        </>
+    <div className="buy-pair">
+      {!course.isFree && (
+        <button type="button" className="pill-btn" onClick={() => { if (!inCart) addToCart(course); setCartOpen(true); }}>
+          {inCart ? "View cart" : "Add to cart"}
+        </button>
       )}
+      <button type="button" className="pill-btn pill-btn--solid" disabled={busy} onClick={buyNow}>
+        {busy ? "Please wait…" : course.isFree ? "Enroll for free" : "Buy now"}
+      </button>
+      {err && <p className="auth-error buy-pair__err">{err}</p>}
     </div>
   );
 }
