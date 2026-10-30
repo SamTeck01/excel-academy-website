@@ -49,7 +49,7 @@ export default function DashboardHome() {
       <section className="dash__hello">
         <div>
           <p>{greeting()},</p>
-          <h1>{first} 👋</h1>
+          <h1>{first}</h1>
         </div>
         <a className="pill-btn" href="/dashboard/explore">Explore courses</a>
       </section>
@@ -79,10 +79,10 @@ export default function DashboardHome() {
       )}
 
       <section className="dash__stats" aria-label="Your progress">
-        <div className="stat"><span className="stat__icon">📚</span><strong>{mine.loading ? "–" : courses.length}</strong><span>Courses enrolled</span></div>
-        <div className="stat"><span className="stat__icon">✅</span><strong>{mine.loading ? "–" : lessonsDone}</strong><span>Lessons completed</span></div>
-        <div className="stat"><span className="stat__icon">🏆</span><strong>{stats.loading ? "–" : (stats.data?.totalPoints || 0).toLocaleString()}</strong><span>{stats.data?.rank ? `Points · rank #${stats.data.rank}` : "Challenge points"}</span></div>
-        <div className="stat"><span className="stat__icon">🎁</span><strong>{bonus.loading ? "–" : naira(bonus.data || 0)}</strong><span>Gift-box credit</span></div>
+        <div className="stat"><strong>{mine.loading ? "–" : courses.length}</strong><span>Courses enrolled</span></div>
+        <div className="stat"><strong>{mine.loading ? "–" : lessonsDone}</strong><span>Lessons completed</span></div>
+        <div className="stat"><strong>{stats.loading ? "–" : (stats.data?.totalPoints || 0).toLocaleString()}</strong><span>{stats.data?.rank ? `Points · rank #${stats.data.rank}` : "Challenge points"}</span></div>
+        <div className="stat"><strong>{bonus.loading ? "–" : naira(bonus.data || 0)}</strong><span>Gift-box credit</span></div>
       </section>
 
       {courses.length > 0 && (
