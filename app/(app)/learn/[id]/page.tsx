@@ -111,7 +111,7 @@ export default function LearnPage({ params }: { params: { id: string } }) {
           </>
         )}
         <p className="lms__progress"><span style={{ width: `${percent}%` }} /> {percent}% complete</p>
-        <p className="lms__mock">Ready to test yourself? Take this course's mock exam in the Excel Academy app.</p>
+        <p className="lms__mock">Ready to test yourself? <a href={`/dashboard/mock-exams/${params.id}`}>Take this course's mock exam</a>.</p>
       </div>
 
       <aside className={`lms__contents${menuOpen ? " is-open" : ""}`}>

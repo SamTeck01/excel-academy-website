@@ -126,7 +126,7 @@ export default function MockExamPage({ params }: { params: { courseId: string } 
             <span>score</span>
           </div>
           <div>
-            <h1>{pass ? "Well done! 🎉" : "Keep practising 💪"}</h1>
+            <h1>{pass ? "Well done!" : "Keep practising"}</h1>
             <p className="muted">{info.title}</p>
             <ul className="mx-tally">
               <li className="ok"><strong>{result.correct}</strong> correct</li>
@@ -177,7 +177,7 @@ export default function MockExamPage({ params }: { params: { courseId: string } 
             <strong>{info.title}</strong>
             <span className="muted">{answered} of {questions.length} answered</span>
           </div>
-          <span className={`mx-timer${low ? " is-low" : ""}`} aria-live="polite">⏱ {clock(left)}</span>
+          <span className={`mx-timer${low ? " is-low" : ""}`} aria-live="polite">{clock(left)} left</span>
           <div className="buy-pair">
             <button className="pill-btn" onClick={async () => { await save(); location.href = "/dashboard/mock-exams"; }}>Pause & exit</button>
             <button className="pill-btn pill-btn--solid" disabled={busy}
