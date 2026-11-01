@@ -3,23 +3,26 @@ import { useEffect, useState, type FormEvent, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import { useStore } from "@/lib/client";
 import { useNotifications } from "@/lib/useApi";
+import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
+import {
+  BookOpen01Icon, Globe02Icon, Home01Icon, Logout01Icon, Notification03Icon, Search01Icon, ShoppingBag02Icon, Task01Icon, UserIcon,
+} from "@hugeicons/core-free-icons";
 
-type Item = { href: string; label: string; icon: ReactNode; match?: (p: string) => boolean };
+type Item = { href: string; label: string; icon: IconSvgElement; match?: (p: string) => boolean };
 
+// One outline icon set (Hugeicons), one size and stroke everywhere.
 const I = {
-  home: <path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5Z" />,
-  courses: <><path d="M4 5h11a3 3 0 0 1 3 3v12H7a3 3 0 0 1-3-3V5Z" /><path d="M18 8h2v12" /><path d="M8 9h6M8 13h6" /></>,
-  explore: <><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></>,
-  exam: <><path d="M9 4h6l1 2h3v14H5V6h3l1-2Z" /><path d="m9 13 2 2 4-4" /></>,
-  bell: <><path d="M6 16V11a6 6 0 1 1 12 0v5l2 2H4l2-2Z" /><path d="M10 20a2 2 0 0 0 4 0" /></>,
-  user: <><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></>,
-  cart: <><path d="M6 7h12l-1 13H7L6 7Z" /><path d="M9 7a3 3 0 0 1 6 0" /></>,
-  logout: <><path d="M15 4h4v16h-4" /><path d="M10 8l-4 4 4 4M6 12h10" /></>,
-  site: <><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" /></>,
+  home: Home01Icon,
+  courses: BookOpen01Icon,
+  explore: Search01Icon,
+  exam: Task01Icon,
+  bell: Notification03Icon,
+  user: UserIcon,
+  cart: ShoppingBag02Icon,
+  logout: Logout01Icon,
+  site: Globe02Icon,
 };
-const Icon = ({ d }: { d: ReactNode }) => (
-  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{d}</svg>
-);
+const Icon = ({ d }: { d: IconSvgElement }) => <HugeiconsIcon icon={d} size={20} strokeWidth={1.6} aria-hidden="true" />;
 
 const NAV: Item[] = [
   { href: "/dashboard", label: "Home", icon: I.home, match: (p) => p === "/dashboard" },

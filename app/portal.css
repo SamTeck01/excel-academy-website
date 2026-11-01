@@ -208,3 +208,9 @@
 /* Lesson player inside the app */
 .portal .lms { padding: 0; }
 .portal .lms__contents { top: 86px; }
+
+/* Icons: plain outline, no tinted boxes (design skills). */
+.p-exam__icon { width: auto; height: auto; background: none; color: var(--orange-dark); }
+.is-done-icon { color: #23863f; }
+.lms__contents button svg, .csec__icon svg, .cd__includes svg { flex: none; }
+.cd__includes span { color: var(--orange-dark); }

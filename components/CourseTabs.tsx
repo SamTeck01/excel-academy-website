@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { Icon } from "@/components/Icon";
 
 export type Lesson = { _id: string; lesson_name: string; modules: { _id: string; module_name: string; hasVideo?: boolean }[] };
 export type Review = { uid: string; name?: string; rating: number; comment?: string; createdAt?: string };
@@ -34,9 +35,9 @@ export function CourseTabs({ lessons, reviews, title }: { lessons: Lesson[]; rev
                 <ul>
                   {l.modules.map((m) => (
                     <li key={m._id}>
-                      <span className="csec__icon" aria-hidden="true">{m.hasVideo === false ? "📄" : "▶"}</span>
+                      <span className="csec__icon"><Icon name={m.hasVideo === false ? "file" : "play"} size={15} /></span>
                       <span>{m.module_name}</span>
-                      <span className="csec__lock" aria-label="Unlocks after enrolling">🔒</span>
+                      <span className="csec__lock" title="Unlocks after enrolling"><Icon name="lock" size={15} /></span>
                     </li>
                   ))}
                 </ul>

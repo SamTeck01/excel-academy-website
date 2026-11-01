@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { api } from "@/lib/client";
 import { ErrorBox, Skeleton } from "@/components/app/ui";
 import type { ExamSummary } from "../page";
+import { Icon } from "@/components/Icon";
 
 type Question = { id: string; question: string; options: string[] };
 type ReviewItem = { id: string; question: string; options: string[]; answer: number; chosen: number | null; correct: boolean; explanation: string };
@@ -221,7 +222,7 @@ export default function MockExamPage({ params }: { params: { courseId: string } 
     <div className="mx">
       <a className="crumb" href="/dashboard/mock-exams">← Mock exams</a>
       <section className="mx-intro">
-        <span className="p-exam__icon" aria-hidden="true">📝</span>
+        <span className="p-exam__icon"><Icon name="exam" size={22} /></span>
         <h1>{info.title}</h1>
         <div className="mx-facts">
           <div><strong>{info.questionCount}</strong><span>Questions</span></div>

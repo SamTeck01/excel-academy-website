@@ -63,7 +63,7 @@ export function MyCourseCard({ c }: { c: MyCourse }) {
         <Progress value={pct} />
         <div className="p-ccard__foot">
           <span>{total ? `${done}/${total} lessons` : "Start learning"}</span>
-          <strong>{pct >= 100 ? "Completed ✓" : pct ? `${pct}%` : "New"}</strong>
+          <strong>{pct >= 100 ? "Completed" : pct ? `${pct}%` : "New"}</strong>
         </div>
       </div>
     </a>

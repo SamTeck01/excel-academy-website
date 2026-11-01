@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { API, type Course, levelKey, levelLabel, naira, packageOf, programmeOf, thumb } from "@/lib/catalogue";
 import { BuyButtons } from "@/components/BuyBox";
 import { CourseTabs, type Lesson, type Review } from "@/components/CourseTabs";
+import { Icon } from "@/components/Icon";
 
 export const revalidate = 300;
 
@@ -94,11 +95,11 @@ export default async function CoursePage({ params }: { params: { id: string } })
           <aside className="cd__side">
             <h2>Course includes</h2>
             <ul className="cd__includes">
-              <li><span aria-hidden="true">▶</span>{videos} Lessons</li>
-              <li><span aria-hidden="true">📄</span>Detailed notes</li>
-              <li><span aria-hidden="true">✍️</span>Exam-standard questions and detailed explanations</li>
-              <li><span aria-hidden="true">📚</span>Solved past questions on each topic</li>
-              <li><span aria-hidden="true">📈</span>Past questions trend</li>
+              <li><span><Icon name="play" /></span>{videos} Lessons</li>
+              <li><span><Icon name="file" /></span>Detailed notes</li>
+              <li><span><Icon name="note" /></span>Exam-standard questions and detailed explanations</li>
+              <li><span><Icon name="library" /></span>Solved past questions on each topic</li>
+              <li><span><Icon name="chart" /></span>Past questions trend</li>
             </ul>
             <CourseTabs lessons={lessons} reviews={reviews} title={c.title} />
             <div className="cd__side-buy"><BuyButtons course={c} /></div>

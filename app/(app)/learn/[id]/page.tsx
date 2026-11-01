@@ -1,6 +1,7 @@
 "use client";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { api, useStore } from "@/lib/client";
+import { Icon } from "@/components/Icon";
 
 type Module = { _id: string; module_name: string; firebase_id: string; hasVideo?: boolean };
 type Lesson = { _id: string; lesson_name: string; modules: Module[] };
@@ -125,7 +126,7 @@ export default function LearnPage({ params }: { params: { id: string } }) {
                     className={m._id === current?._id ? "is-current" : undefined}
                     disabled={!m.firebase_id}
                     onClick={() => { setCurrent(m); setMenuOpen(false); }}>
-                    <span aria-hidden="true">{done.has(m._id) ? "✓" : m.firebase_id ? "▶" : "📄"}</span> {m.module_name}
+                    <Icon name={done.has(m._id) ? "done" : m.firebase_id ? "play" : "file"} size={16} className={done.has(m._id) ? "is-done-icon" : undefined} /> {m.module_name}
                   </button>
                 </li>
               ))}

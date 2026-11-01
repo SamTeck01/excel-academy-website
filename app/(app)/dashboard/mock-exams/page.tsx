@@ -1,6 +1,7 @@
 "use client";
 import { useApi } from "@/lib/useApi";
 import { Empty, ErrorBox, PageHead, Skeleton } from "@/components/app/ui";
+import { Icon } from "@/components/Icon";
 
 export type ExamSummary = {
   courseId: string;
@@ -32,7 +33,7 @@ export default function MockExamsPage() {
           {list.data.map((e) => (
             <a key={e.courseId} href={`/dashboard/mock-exams/${e.courseId}`} className="p-exam">
               <div className="p-exam__top">
-                <span className="p-exam__icon" aria-hidden="true">📝</span>
+                <span className="p-exam__icon"><Icon name="exam" size={22} /></span>
                 {e.inProgress ? (
                   <span className="p-chip p-chip--warn">In progress</span>
                 ) : e.attempts ? (
