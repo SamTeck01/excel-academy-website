@@ -5,7 +5,7 @@ import { useStore } from "@/lib/client";
 import { useNotifications } from "@/lib/useApi";
 import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
 import {
-  Award01Icon, BookOpen01Icon, Globe02Icon, Home01Icon, Logout01Icon, Notification03Icon, Search01Icon, ShoppingBag02Icon, Task01Icon, UserIcon,
+  Award01Icon, BookOpen01Icon, Globe02Icon, Home01Icon, Logout01Icon, Menu01Icon, Notification03Icon, Search01Icon, ShoppingBag02Icon, Task01Icon, UserIcon,
 } from "@hugeicons/core-free-icons";
 
 type Item = { href: string; label: string; icon: IconSvgElement; match?: (p: string) => boolean };
@@ -34,7 +34,10 @@ const NAV: Item[] = [
   { href: "/dashboard/notifications", label: "Notifications", icon: I.bell },
   { href: "/dashboard/account", label: "Account", icon: I.user },
 ];
-const TABS = NAV.filter((n) => n.href !== "/dashboard/notifications");
+// Phones: the four daily places, everything else in the More sheet.
+const TAB_HREFS = ["/dashboard", "/dashboard/courses", "/dashboard/mock-exams", "/dashboard/challenges"];
+const TABS = NAV.filter((n) => TAB_HREFS.includes(n.href));
+const MORE = NAV.filter((n) => !TAB_HREFS.includes(n.href));
 
 /** The student app frame (web version of the mobile app). */
 export function AppShell({ children }: { children: ReactNode }) {
@@ -42,6 +45,13 @@ export function AppShell({ children }: { children: ReactNode }) {
   const { user, ready, logout, cart, setCartOpen } = useStore();
   const notes = useNotifications();
   const [q, setQ] = useState("");
+  const [more, setMore] = useState(false);
+  useEffect(() => {
+    if (!more) return;
+    const close = (e: KeyboardEvent) => e.key === "Escape" && setMore(false);
+    window.addEventListener("keydown", close);
+    return () => window.removeEventListener("keydown", close);
+  }, [more]);
   const on = (n: Item) => (n.match ? n.match(path) : path.startsWith(n.href));
 
   // Signed-out visitors go to the login page and come straight back.
@@ -120,10 +130,33 @@ export function AppShell({ children }: { children: ReactNode }) {
         {TABS.map((n) => (
           <a key={n.href} href={n.href} className={on(n) ? "is-active" : undefined} aria-current={on(n) ? "page" : undefined}>
             <Icon d={n.icon} />
-            <span>{n.label === "My courses" ? "Courses" : n.label === "Mock exams" ? "Mocks" : n.label}</span>
+            <span>{n.label === "My courses" ? "Courses" : n.label === "Mock exams" ? "Mocks" : n.label === "Challenges" ? "Play" : n.label}</span>
           </a>
         ))}
+        <button type="button" className={MORE.some(on) ? "is-active" : undefined} aria-expanded={more} onClick={() => setMore(true)}>
+          <Icon d={Menu01Icon} />
+          <span>More</span>
+          {(notes.data?.unread || 0) > 0 && <i className="portal__dot" aria-label="Unread notifications" />}
+        </button>
       </nav>
+      {more && (
+        <div className="portal__sheet" onClick={() => setMore(false)}>
+          <div role="dialog" aria-modal="true" aria-label="More" onClick={(e) => e.stopPropagation()}>
+            <span className="portal__grab" aria-hidden="true" />
+            {MORE.map((n) => (
+              <a key={n.href} href={n.href} className={on(n) ? "is-active" : undefined}>
+                <Icon d={n.icon} />
+                <span>{n.label}</span>
+                {n.href === "/dashboard/notifications" && (notes.data?.unread || 0) > 0 && <b>{notes.data?.unread}</b>}
+              </a>
+            ))}
+            <a href="/"><Icon d={I.site} /><span>Back to website</span></a>
+            <button type="button" className="is-danger" onClick={async () => { await logout(); location.href = "/"; }}>
+              <Icon d={I.logout} /><span>Log out</span>
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

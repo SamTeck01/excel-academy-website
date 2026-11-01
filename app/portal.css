@@ -285,3 +285,24 @@
 .gm-final strong { font-size: 38px; font-variant-numeric: tabular-nums; }
 .gm-final em { font-style: normal; font-weight: 700; color: var(--muted); }
 @media (prefers-reduced-motion: reduce) { .gm-pulse { animation: none; } }
+
+/* Phone navigation: a floating bar, with the rest in a bottom sheet */
+@media (max-width: 1023px) {
+  .portal__main { padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
+  .portal__tabs { inset: auto 12px calc(12px + env(safe-area-inset-bottom)) 12px; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; padding: 5px; background: rgba(255,255,255,.88); -webkit-backdrop-filter: blur(16px) saturate(1.6); backdrop-filter: blur(16px) saturate(1.6); border: 1px solid rgba(0,0,0,.07); border-radius: 22px; box-shadow: 0 10px 32px rgba(0,0,0,.16); }
+  .portal__tabs a, .portal__tabs button { position: relative; display: grid; justify-items: center; gap: 2px; min-width: 0; padding: 7px 2px; border: 0; background: none; border-radius: 16px; color: var(--muted); font: 600 11px var(--font); cursor: pointer; transition: background-color .16s ease, color .16s ease; }
+  .portal__tabs a span, .portal__tabs button span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .portal__tabs a.is-active, .portal__tabs button.is-active { background: #fff3e8; color: var(--orange-dark); }
+  .portal__tabs a:active, .portal__tabs button:active { transform: scale(.96); }
+}
+.portal__dot { position: absolute; top: 6px; right: calc(50% - 15px); width: 8px; height: 8px; border-radius: 50%; background: var(--orange); }
+.portal__sheet { position: fixed; inset: 0; z-index: 60; display: flex; align-items: flex-end; background: rgba(0,0,0,.4); animation: sheet-fade .18s ease-out both; }
+.portal__sheet > div { width: 100%; box-sizing: border-box; background: #fff; border-radius: 24px 24px 0 0; padding: 10px 14px calc(16px + env(safe-area-inset-bottom)); display: grid; gap: 4px; animation: sheet-up .26s cubic-bezier(.16,1,.3,1) both; }
+.portal__grab { justify-self: center; width: 40px; height: 4px; border-radius: 4px; background: var(--line); margin-bottom: 8px; }
+.portal__sheet a, .portal__sheet button { display: flex; align-items: center; gap: 14px; width: 100%; padding: 14px; border: 0; background: none; border-radius: 14px; color: var(--ink); font: 500 16px var(--font); text-align: left; cursor: pointer; }
+.portal__sheet a.is-active { background: #fff3e8; color: var(--orange-dark); }
+.portal__sheet a b { margin-left: auto; min-width: 22px; padding: 2px 6px; box-sizing: border-box; text-align: center; border-radius: 999px; background: var(--orange); color: #fff; font-size: 12px; }
+.portal__sheet .is-danger { color: #c62340; }
+@keyframes sheet-fade { from { opacity: 0; } }
+@keyframes sheet-up { from { transform: translateY(100%); } }
+@media (prefers-reduced-motion: reduce) { .portal__sheet, .portal__sheet > div { animation: none; } }
