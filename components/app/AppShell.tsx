@@ -5,7 +5,7 @@ import { useStore } from "@/lib/client";
 import { useNotifications } from "@/lib/useApi";
 import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
 import {
-  BookOpen01Icon, Globe02Icon, Home01Icon, Logout01Icon, Notification03Icon, Search01Icon, ShoppingBag02Icon, Task01Icon, UserIcon,
+  Award01Icon, BookOpen01Icon, Globe02Icon, Home01Icon, Logout01Icon, Notification03Icon, Search01Icon, ShoppingBag02Icon, Task01Icon, UserIcon,
 } from "@hugeicons/core-free-icons";
 
 type Item = { href: string; label: string; icon: IconSvgElement; match?: (p: string) => boolean };
@@ -16,6 +16,7 @@ const I = {
   courses: BookOpen01Icon,
   explore: Search01Icon,
   exam: Task01Icon,
+  game: Award01Icon,
   bell: Notification03Icon,
   user: UserIcon,
   cart: ShoppingBag02Icon,
@@ -29,6 +30,7 @@ const NAV: Item[] = [
   { href: "/dashboard/courses", label: "My courses", icon: I.courses, match: (p) => p.startsWith("/dashboard/courses") || p.startsWith("/learn") },
   { href: "/dashboard/explore", label: "Explore", icon: I.explore },
   { href: "/dashboard/mock-exams", label: "Mock exams", icon: I.exam },
+  { href: "/dashboard/challenges", label: "Challenges", icon: I.game },
   { href: "/dashboard/notifications", label: "Notifications", icon: I.bell },
   { href: "/dashboard/account", label: "Account", icon: I.user },
 ];
