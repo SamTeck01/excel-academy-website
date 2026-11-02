@@ -1,3 +1,4 @@
+import { CtaLink } from "@/components/CtaLink";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = { title: "Excel Academy | Pass your Accounting & Finance exams", description: "Everything you need to pass your ICAN, ACCA and other Accounting & Finance exams. Lectures, summary notes, mock exams and tutor support from Excel Academy." };
@@ -17,9 +18,9 @@ export default function Page() {
               🥇
             </span>
           </h1>
-          <a href="/courses" className="btn btn--primary btn--lg hero__cta">
+          <CtaLink href="/courses" className="btn btn--primary btn--lg hero__cta">
             Let’s get started
-          </a>
+          </CtaLink>
           <div className="hero__copy">
             <p>
               Everything you need to pass your Accounting &amp; Finance exams is here! Over 5,000+ students have chosen Excel Academy as their trusted online study partner.
@@ -200,9 +201,9 @@ export default function Page() {
             <p>
               Make learning simple and affordable by studying with us at Excel Academy.
             </p>
-            <a href="/courses" className="btn btn--primary">
+            <CtaLink href="/courses" className="btn btn--primary">
               Explore courses
-            </a>
+            </CtaLink>
           </div>
           <div className="segmented" role="tablist" aria-label="Course categories">
             <button role="tab" id="tab-af" aria-selected="true" aria-controls="panel-af">
@@ -222,9 +223,9 @@ export default function Page() {
                 <p>
                   Utilize the most comprehensive and current study tools available, including lectures, summary notes, mock examinations, tutor support, and more, to be fully prepared for your ICAN exams.
                 </p>
-                <a href="/courses" className="btn btn--primary">
+                <CtaLink href="/courses" className="btn btn--primary">
                   View Courses
-                </a>
+                </CtaLink>
               </div>
               <img className="course-row__img" src="/img/ican-photo.webp" alt="Student taking notes at a computer desk" loading="lazy" />
             </article>
@@ -237,9 +238,9 @@ export default function Page() {
                 <p>
                   Utilize the most comprehensive and current study tools available, including lectures, summary notes, mock examinations, tutor support, and more, to be fully prepared for your ACCA exams.
                 </p>
-                <a href="/courses" className="btn btn--primary">
+                <CtaLink href="/courses" className="btn btn--primary">
                   View Courses
-                </a>
+                </CtaLink>
               </div>
               <img className="course-row__img" src="/img/acca-photo.webp" alt="Student studying on a laptop at home" loading="lazy" />
             </article>
@@ -253,9 +254,9 @@ export default function Page() {
                 <p>
                   Build practical spreadsheet skills, from formulas and functions to data analysis and reporting.
                 </p>
-                <a href="/courses" className="btn btn--primary">
+                <CtaLink href="/courses" className="btn btn--primary">
                   View Courses
-                </a>
+                </CtaLink>
               </article>
               <article className="pd-card">
                 <h3>
@@ -264,9 +265,9 @@ export default function Page() {
                 <p>
                   Learn to manage bookkeeping, invoicing, payroll and financial reports with QuickBooks.
                 </p>
-                <a href="/courses" className="btn btn--primary">
+                <CtaLink href="/courses" className="btn btn--primary">
                   View Courses
-                </a>
+                </CtaLink>
               </article>
             </div>
           </div>

@@ -1,3 +1,4 @@
+import { CtaLink } from "@/components/CtaLink";
 import type { Metadata } from "next";
 import { PROGRAMMES, getCatalogue, programmeOf } from "@/lib/catalogue";
 import { PhotoHero } from "@/components/PhotoHero";
@@ -26,7 +27,7 @@ export default async function CoursesPage() {
       <PhotoHero>
         <h1>Explore the program that’s best fit for you🧑🏾‍💻</h1>
         <p>Take your career to the next level with an online degree, get started with our verified courses</p>
-        <a href="#programs" className="btn btn--primary">Get started with us</a>
+        <CtaLink href="#programs" className="btn btn--primary">Get started with us</CtaLink>
       </PhotoHero>
 
       <section className="container section" id="programs">

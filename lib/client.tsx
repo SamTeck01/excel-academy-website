@@ -14,6 +14,7 @@ export const profileRef = (uid: string) => doc(fs, "users", uid);
 export { setDoc };
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { API, type Course } from "./catalogue";
+import { dashUrl, forgetStudent, onWebsite, rememberStudent, rememberedStudent } from "./hosts";
 
 const app = getApps()[0] || initializeApp({
   apiKey: "AIzaSyD_b49nKGyE6FrKyJ0X0GipuiTn9nwZOnI",
@@ -70,6 +71,8 @@ async function ensureProfile(user: User, name?: string) {
 
 type Ctx = {
   user: User | null;
+  /** First name of whoever is logged in, also known on the website address. */
+  student: string | null;
   ready: boolean;
   owned: Set<string>;
   refreshOwned: () => Promise<void>;
@@ -95,6 +98,7 @@ export const useStore = () => useContext(StoreContext)!;
 export function StoreProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null),
     [ready, setReady] = useState(false),
+    [student, setStudent] = useState<string | null>(null),
     [owned, setOwned] = useState<Set<string>>(new Set()),
     [cart, setCart] = useState<Course[]>([]),
     [cartOpen, setCartOpen] = useState(false),
@@ -117,9 +121,29 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     } catch {}
     // Back from a Google redirect sign-in: make sure the profile exists.
     getRedirectResult(auth).then((r) => r && ensureProfile(r.user)).catch(() => {});
+    setStudent(rememberedStudent());
+    // Courses carried over from the website's cart at login.
+    const carried = new URLSearchParams(location.search).get("cart");
+    if (carried) {
+      const ids = carried.split(",");
+      fetch(`${API}/all-courses`).then((r) => r.json()).then((b) => {
+        const found = ((b.AllCourses || []) as Course[]).filter((c) => ids.includes(String(c.id)));
+        setCart((list) => [...list, ...found.filter((c) => !list.some((x) => x.id === c.id))]);
+        if (found.length) setCartOpen(true);
+      }).catch(() => {});
+    }
     return onAuthStateChanged(auth, (u) => {
       setUser(u);
       setReady(true);
+      if (u) {
+        const first = (u.displayName || u.email || "Student").split(/[\s@]/)[0];
+        rememberStudent(first);
+        setStudent(first);
+      } else if (!onWebsite()) {
+        // The website has no login of its own, so only the dashboard can say someone left.
+        forgetStudent();
+        setStudent(null);
+      }
       refreshOwned();
     });
   }, [refreshOwned]);
@@ -139,11 +163,21 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo<Ctx>(
     () => ({
-      user, ready, owned, refreshOwned, cart, cartOpen, setCartOpen, authPrompt,
+      user, student, ready, owned, refreshOwned, cart, cartOpen, setCartOpen, authPrompt,
       addToCart: (c) => setCart((cs) => (cs.some((x) => x.id === c.id) ? cs : [...cs, c])),
       removeFromCart: (id) => setCart((cs) => cs.filter((c) => c.id !== id)),
       clearCart: () => setCart([]),
-      requireLogin: (reason, then) => setAuthPrompt({ reason: reason || "Use the same account as the Excel Academy app.", then }),
+      requireLogin: (reason, then) => {
+        // The website has no login of its own: send them to the dashboard and bring them back to this course.
+        if (onWebsite()) {
+          const course = location.pathname.match(/^\/course\/([^/]+)/);
+          const ids = cart.map((c) => c.id).join(",");
+          const next = course ? `/dashboard/explore/${course[1]}` : `/dashboard${ids ? `/explore?cart=${ids}` : ""}`;
+          location.href = dashUrl(`/login?next=${encodeURIComponent(next)}`);
+          return;
+        }
+        setAuthPrompt({ reason: reason || "Use the same account as the Excel Academy app.", then });
+      },
       closeAuth: () => setAuthPrompt(null),
       login: async (email, password) => {
         await signInWithEmailAndPassword(auth, email, password);
@@ -172,10 +206,12 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       resetPassword: (email) => sendPasswordResetEmail(auth, email),
       logout: async () => {
         await signOut(auth);
+        forgetStudent();
+        setStudent(null);
         setOwned(new Set());
       },
     }),
-    [user, ready, owned, refreshOwned, cart, cartOpen, authPrompt, after],
+    [user, student, ready, owned, refreshOwned, cart, cartOpen, authPrompt, after],
   );
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;

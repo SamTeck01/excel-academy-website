@@ -2,13 +2,21 @@
 import { useState } from "react";
 import type { Course } from "@/lib/catalogue";
 import { api, useStore } from "@/lib/client";
+import { dashUrl, onWebsite } from "@/lib/hosts";
 
 /** Figma "Add to cart" / "Buy now" pair; "Continue learning" once enrolled. */
 export function BuyButtons({ course }: { course: Course }) {
-  const { user, owned, requireLogin, addToCart, cart, setCartOpen, refreshOwned } = useStore();
+  const { user, student, owned, requireLogin, addToCart, cart, setCartOpen, refreshOwned } = useStore();
   const [busy, setBusy] = useState(false),
     [err, setErr] = useState("");
   const inCart = cart.some((c) => c.id === course.id);
+  // Logged in on the dashboard but reading the website: buying happens over there.
+  if (!user && student && onWebsite())
+    return (
+      <div className="buy-pair">
+        <a className="pill-btn pill-btn--solid" href={dashUrl(`/dashboard/explore/${course.id}`)}>Open in my dashboard</a>
+      </div>
+    );
 
   if (owned.has(course.id)) {
     return (
@@ -40,7 +48,7 @@ export function BuyButtons({ course }: { course: Course }) {
       }
       const r = await api<{ data: { authorization_url: string } }>("/payment/initialize-payment", {
         method: "POST",
-        body: JSON.stringify({ courseIds: [course.id], returnTo: `${location.origin}/payment/complete?course=${course.id}` }),
+        body: JSON.stringify({ courseIds: [course.id], returnTo: `${location.origin}/dashboard/payment?course=${course.id}` }),
       });
       location.href = r.data.authorization_url;
     } catch (e) {

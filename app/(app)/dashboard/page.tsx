@@ -107,7 +107,7 @@ export default function DashboardHome() {
           ) : (
             <div className="p-picks">
               {picks.map((c) => (
-                <a key={c.id} href={`/course/${c.id}`} className="p-pick">
+                <a key={c.id} href={`/dashboard/explore/${c.id}`} className="p-pick">
                   <img src={thumb(c)} alt="" loading="lazy" />
                   <div>
                     <span>{programmeOf(c) === "PD" ? "Professional Development" : programmeOf(c)}</span>

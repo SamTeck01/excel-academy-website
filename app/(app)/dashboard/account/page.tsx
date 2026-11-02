@@ -79,7 +79,7 @@ export default function AccountPage() {
         <div className="account__card account__orders">
           <h2>Purchases</h2>
           {!orders ? <div className="sk" style={{ height: 80 }} /> : !orders.length ? (
-            <p>No purchases yet. <a href="/courses">Browse courses</a></p>
+            <p>No purchases yet. <a href="/dashboard/explore">Browse courses</a></p>
           ) : (
             <ul>
               {orders.map((o) => (

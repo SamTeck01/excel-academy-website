@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { usePathname } from "next/navigation";
 import { api, authError, useStore } from "@/lib/client";
+import { dashUrl } from "@/lib/hosts";
 import { naira, thumb } from "@/lib/catalogue";
 
 const NAV = [
@@ -15,13 +16,13 @@ const TUTOR = "https://wa.me/2348094579949?text=Hello%20Excel%20Academy%2C%20I%2
 /** The site navbar (design: Figma "Navbar"), with the student's account and cart. */
 export function Navbar() {
   const path = usePathname();
-  const { user, cart, setCartOpen, requireLogin, logout } = useStore();
+  const { student, cart, setCartOpen, requireLogin } = useStore();
   const active = (href: string) => (href === "/" ? path === "/" : path.startsWith(href));
 
-  const account = user ? (
+  const account = student ? (
     <span className="store-user">
-      <a href="/dashboard" className="navbar__login">Dashboard</a>
-      <a href="/dashboard/account" className="navbar__login" title={user.email || ""}>Account</a>
+      <span className="navbar__login">Hi, {student}</span>
+      <a href={dashUrl("/dashboard")} className="btn btn--primary btn--sm">My dashboard</a>
     </span>
   ) : (
     <>
@@ -163,7 +164,7 @@ export function CartDrawer() {
     try {
       const r = await api<{ data: { authorization_url: string } }>("/payment/initialize-payment", {
         method: "POST",
-        body: JSON.stringify({ courseIds: items.map((c) => c.id), returnTo: `${location.origin}/payment/complete` }),
+        body: JSON.stringify({ courseIds: items.map((c) => c.id), returnTo: `${location.origin}/dashboard/payment` }),
       });
       location.href = r.data.authorization_url;
     } catch (e) {
@@ -181,7 +182,7 @@ export function CartDrawer() {
           <button type="button" className="auth-close" onClick={() => setCartOpen(false)} aria-label="Close cart">×</button>
         </div>
         {items.length === 0 ? (
-          <p className="drawer__empty">Your cart is empty. <a href="/courses">Browse courses</a></p>
+          <p className="drawer__empty">Your cart is empty. <a href={user ? "/dashboard/explore" : "/courses"}>Browse courses</a></p>
         ) : (
           <>
             <ul className="drawer__list">

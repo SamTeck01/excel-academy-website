@@ -2,10 +2,11 @@
 import { useEffect, useState, type FormEvent, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import { useStore } from "@/lib/client";
+import { siteUrl } from "@/lib/hosts";
 import { useNotifications } from "@/lib/useApi";
 import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
 import {
-  Award01Icon, BookOpen01Icon, Globe02Icon, Home01Icon, Logout01Icon, Menu01Icon, Notification03Icon, Search01Icon, ShoppingBag02Icon, Task01Icon, UserIcon,
+  Award01Icon, BookOpen01Icon, CustomerSupportIcon, Globe02Icon, Home01Icon, Logout01Icon, Menu01Icon, Notification03Icon, Search01Icon, ShoppingBag02Icon, Task01Icon, UserIcon,
 } from "@hugeicons/core-free-icons";
 
 type Item = { href: string; label: string; icon: IconSvgElement; match?: (p: string) => boolean };
@@ -17,6 +18,7 @@ const I = {
   explore: Search01Icon,
   exam: Task01Icon,
   game: Award01Icon,
+  help: CustomerSupportIcon,
   bell: Notification03Icon,
   user: UserIcon,
   cart: ShoppingBag02Icon,
@@ -32,6 +34,7 @@ const NAV: Item[] = [
   { href: "/dashboard/mock-exams", label: "Mock exams", icon: I.exam },
   { href: "/dashboard/challenges", label: "Challenges", icon: I.game },
   { href: "/dashboard/notifications", label: "Notifications", icon: I.bell },
+  { href: "/dashboard/help", label: "Help & support", icon: I.help },
   { href: "/dashboard/account", label: "Account", icon: I.user },
 ];
 // Phones: the four daily places, everything else in the More sheet.
@@ -93,8 +96,8 @@ export function AppShell({ children }: { children: ReactNode }) {
           ))}
         </nav>
         <div className="portal__side-foot">
-          <a href="/"><Icon d={I.site} /><span>Excel Academy website</span></a>
-          <button type="button" onClick={async () => { await logout(); location.href = "/"; }}>
+          <a href={siteUrl("/")}><Icon d={I.site} /><span>Excel Academy website</span></a>
+          <button type="button" onClick={async () => { await logout(); location.href = siteUrl("/"); }}>
             <Icon d={I.logout} /><span>Log out</span>
           </button>
         </div>
@@ -150,8 +153,8 @@ export function AppShell({ children }: { children: ReactNode }) {
                 {n.href === "/dashboard/notifications" && (notes.data?.unread || 0) > 0 && <b>{notes.data?.unread}</b>}
               </a>
             ))}
-            <a href="/"><Icon d={I.site} /><span>Back to website</span></a>
-            <button type="button" className="is-danger" onClick={async () => { await logout(); location.href = "/"; }}>
+            <a href={siteUrl("/")}><Icon d={I.site} /><span>Back to website</span></a>
+            <button type="button" className="is-danger" onClick={async () => { await logout(); location.href = siteUrl("/"); }}>
               <Icon d={I.logout} /><span>Log out</span>
             </button>
           </div>
