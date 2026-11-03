@@ -223,7 +223,7 @@ export default function Page() {
                 <p>
                   Utilize the most comprehensive and current study tools available, including lectures, summary notes, mock examinations, tutor support, and more, to be fully prepared for your ICAN exams.
                 </p>
-                <CtaLink href="/courses" className="btn btn--primary">
+                <CtaLink href="/courses/pd" className="btn btn--primary">
                   View Courses
                 </CtaLink>
               </div>
@@ -238,7 +238,7 @@ export default function Page() {
                 <p>
                   Utilize the most comprehensive and current study tools available, including lectures, summary notes, mock examinations, tutor support, and more, to be fully prepared for your ACCA exams.
                 </p>
-                <CtaLink href="/courses" className="btn btn--primary">
+                <CtaLink href="/courses/pd" className="btn btn--primary">
                   View Courses
                 </CtaLink>
               </div>
@@ -254,7 +254,7 @@ export default function Page() {
                 <p>
                   Build practical spreadsheet skills, from formulas and functions to data analysis and reporting.
                 </p>
-                <CtaLink href="/courses" className="btn btn--primary">
+                <CtaLink href="/courses/pd" className="btn btn--primary">
                   View Courses
                 </CtaLink>
               </article>
@@ -265,7 +265,7 @@ export default function Page() {
                 <p>
                   Learn to manage bookkeeping, invoicing, payroll and financial reports with QuickBooks.
                 </p>
-                <CtaLink href="/courses" className="btn btn--primary">
+                <CtaLink href="/courses/pd" className="btn btn--primary">
                   View Courses
                 </CtaLink>
               </article>

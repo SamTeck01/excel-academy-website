@@ -8,62 +8,62 @@ export function Footer() {
           </h4>
           <ul>
             <li>
-              <a href="/courses">
+              <a href="/courses/jupeb">
                 JUPEB Courses
               </a>
             </li>
             <li>
-              <a href="/courses">
+              <a href="/courses/ican">
                 ICAN Courses
               </a>
             </li>
             <li>
-              <a href="/courses">
+              <a href="/courses/cis">
                 CIS Courses
               </a>
             </li>
             <li>
-              <a href="/courses">
+              <a href="/courses/citn">
                 CITN Courses
               </a>
             </li>
             <li>
-              <a href="/courses">
+              <a href="/courses/cibn">
                 CIBN Courses
               </a>
             </li>
             <li>
-              <a href="/courses">
+              <a href="/courses/anan">
                 ANAN Courses
               </a>
             </li>
             <li>
-              <a href="/courses">
+              <a href="/courses/acca">
                 ACCA Courses
               </a>
             </li>
             <li>
-              <a href="/courses">
+              <a href="/courses/cima">
                 CIMA Courses
               </a>
             </li>
             <li>
-              <a href="/courses">
+              <a href="/courses/cfa">
                 CFA Courses
               </a>
             </li>
             <li>
-              <a href="/courses">
+              <a href="/courses/cfe">
                 CFE Courses
               </a>
             </li>
             <li>
-              <a href="/courses">
+              <a href="/courses/cpa">
                 CPA Courses
               </a>
             </li>
             <li>
-              <a href="/courses">
+              <a href="/courses/pd">
                 Professional Development Courses
               </a>
             </li>

@@ -306,3 +306,6 @@
 @keyframes sheet-fade { from { opacity: 0; } }
 @keyframes sheet-up { from { transform: translateY(100%); } }
 @media (prefers-reduced-motion: reduce) { .portal__sheet, .portal__sheet > div { animation: none; } }
+
+.drawer__coupon { display: flex; gap: 8px; margin-bottom: 8px; }
+.drawer__coupon input { flex: 1; min-width: 0; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; font: 16px var(--font); }

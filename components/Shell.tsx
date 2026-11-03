@@ -153,9 +153,25 @@ export function AuthDialog() {
 export function CartDrawer() {
   const { cart, cartOpen, setCartOpen, removeFromCart, clearCart, user, requireLogin, owned } = useStore();
   const [busy, setBusy] = useState(false),
-    [err, setErr] = useState("");
+    [err, setErr] = useState(""),
+    [code, setCode] = useState(""),
+    [coupon, setCoupon] = useState<{ code: string; discount: number } | null>(null),
+    [couponMsg, setCouponMsg] = useState("");
   const items = cart.filter((c) => !owned.has(c.id));
   const total = items.reduce((s, c) => s + (Number(c.price) || 0), 0);
+
+  const applyCoupon = async () => {
+    setCouponMsg("");
+    setCoupon(null);
+    if (!user) return requireLogin("Log in to use a coupon");
+    try {
+      const r = await api<{ data: { code: string; discount: number } }>("/coupons/check", { method: "POST", body: JSON.stringify({ code, total }) });
+      setCoupon(r.data);
+      setCouponMsg(`Coupon applied: ${naira(r.data.discount)} off`);
+    } catch (e) {
+      setCouponMsg((e as Error).message);
+    }
+  };
 
   const checkout = async () => {
     if (!user) return requireLogin("Log in to complete your purchase", checkout);
@@ -164,7 +180,7 @@ export function CartDrawer() {
     try {
       const r = await api<{ data: { authorization_url: string } }>("/payment/initialize-payment", {
         method: "POST",
-        body: JSON.stringify({ courseIds: items.map((c) => c.id), returnTo: `${location.origin}/dashboard/payment` }),
+        body: JSON.stringify({ courseIds: items.map((c) => c.id), coupon: coupon?.code, returnTo: `${location.origin}/dashboard/payment` }),
       });
       location.href = r.data.authorization_url;
     } catch (e) {
@@ -199,7 +215,12 @@ export function CartDrawer() {
             </ul>
             <div className="drawer__foot">
               {total >= 100000 && <p className="drawer__bonus">🎁 This order earns ₦3,500 off your next purchase.</p>}
-              <div className="drawer__total"><span>Total</span><strong>{naira(total)}</strong></div>
+              <form className="drawer__coupon" onSubmit={(e) => { e.preventDefault(); applyCoupon(); }}>
+                <input value={code} onChange={(e) => setCode(e.target.value.toUpperCase())} placeholder="Coupon code" aria-label="Coupon code" />
+                <button type="submit" className="pill-btn" disabled={!code.trim()}>Apply</button>
+              </form>
+              {couponMsg && <p className={coupon ? "drawer__note" : "auth-error"} role="status">{couponMsg}</p>}
+              <div className="drawer__total"><span>Total</span><strong>{naira(total - (coupon?.discount || 0))}</strong></div>
               <p className="drawer__note">Any gift-box credit you have comes off at checkout.</p>
               {err && <p className="auth-error">{err}</p>}
               <button type="button" className="btn btn--primary" disabled={busy} onClick={checkout}>
