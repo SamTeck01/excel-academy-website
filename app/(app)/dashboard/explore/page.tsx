@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import { useApi } from "@/lib/useApi";
-import { type Course, PROGRAMMES, programme, programmeOf } from "@/lib/catalogue";
+import { type Course, PROGRAMMES, fetchProgrammes, programme, programmeOf } from "@/lib/catalogue";
 import { CourseCard, ProgrammeCourses } from "@/components/ProgrammeCourses";
 import { ErrorBox, PageHead, Skeleton } from "@/components/app/ui";
 
@@ -12,6 +12,7 @@ export default function ExplorePage() {
     [q, setQ] = useState("");
 
   useEffect(() => {
+    fetchProgrammes().then(cat.reload);
     const p = new URLSearchParams(location.search);
     if (p.get("q")) setQ(p.get("q") || "");
     if (p.get("program") && programme(p.get("program") || "")) setCode((p.get("program") || "").toUpperCase());

@@ -58,8 +58,29 @@ export const naira = (n: number) => "₦" + Number(n || 0).toLocaleString("en-NG
 export const thumb = (c: Pick<Course, "thumbnail">) =>
   c.thumbnail && !/\/wp-content\/?$/.test(c.thumbnail) ? c.thumbnail : "/img/hero.webp";
 
+type LiveProgramme = { code: string; label: string; levels: string[] };
+/** Lays the dashboard's programme edits over the built-in list, in place. */
+export function applyProgrammes(list: LiveProgramme[]) {
+  for (const l of list) {
+    const p = programme(l.code);
+    if (p) {
+      p.name = l.label;
+      p.levels = l.levels;
+    } else PROGRAMMES.splice(PROGRAMMES.length - 1, 0, { code: l.code, name: l.label, levels: l.levels });
+  }
+}
+export const fetchProgrammes = async (init?: RequestInit) => {
+  try {
+    const b = await (await fetch(`${API}/course/programmes/public`, init)).json();
+    applyProgrammes(b.data || []);
+  } catch {
+    /* the built-in list still works */
+  }
+};
+
 /** Public catalogue, fetched on the server and cached for 5 minutes. */
 export async function getCatalogue(): Promise<Course[]> {
+  await fetchProgrammes({ next: { revalidate: 300 } } as RequestInit);
   try {
     const res = await fetch(`${API}/all-courses`, { next: { revalidate: 300 } });
     const body = await res.json();

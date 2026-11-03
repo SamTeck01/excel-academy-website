@@ -1,22 +1,24 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { PROGRAMMES, getCatalogue, programme, programmeOf } from "@/lib/catalogue";
+import { PROGRAMMES, fetchProgrammes, getCatalogue, programme, programmeOf } from "@/lib/catalogue";
 import { ProgrammeCourses } from "@/components/ProgrammeCourses";
 import { PhotoHero } from "@/components/PhotoHero";
 
 export const revalidate = 300;
 export const generateStaticParams = () => PROGRAMMES.map((p) => ({ code: p.code.toLowerCase() }));
 
-export function generateMetadata({ params }: { params: { code: string } }): Metadata {
+export async function generateMetadata({ params }: { params: { code: string } }): Promise<Metadata> {
+  await fetchProgrammes({ next: { revalidate: 300 } } as RequestInit);
   const p = programme(params.code);
   return p ? { title: `${p.code === "PD" ? "Professional Development" : p.code} Courses | Excel Academy`, description: `Online lectures, notes and mock exams for ${p.name}.` } : {};
 }
 
 /** Figma "Courses/ ICAN". */
 export default async function ProgrammePage({ params }: { params: { code: string } }) {
+  const all = await getCatalogue();
   const p = programme(params.code);
   if (!p) notFound();
-  const courses = (await getCatalogue()).filter((c) => programmeOf(c) === p.code);
+  const courses = all.filter((c) => programmeOf(c) === p.code);
 
   return (
     <main>
