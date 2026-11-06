@@ -292,11 +292,25 @@ export default function Page() {
             <div className="carousel__track" tabIndex={0}>
               <figure className="testimonial">
                 <blockquote>
+                  I passed all the 3 papers I wrote. Thank you so much for everything Mr Ahmed. I really appreciate all you&apos;ve done for me. I recommend Excel Academy to anyone preparing for ICAN Examinations.
+                </blockquote>
+                <figcaption>
+                  <img className="testimonial__avatar" src="/img/testimonials/s1.jpg" alt="" width={48} height={48} loading="lazy" style={{ objectFit: "cover" }} />
+                  <span>
+                    Dada Ifeoluwa, ACA
+                    <small>
+                      November 2021 Batch
+                    </small>
+                  </span>
+                </figcaption>
+              </figure>
+              <figure className="testimonial">
+                <blockquote>
                   I appreciate Excel Academy for the wonderful support. I passed my papers. Your lectures and guidance were so helpful Mr Ahmed. We move to the next steps.
                 </blockquote>
                 <figcaption>
                   <span className="testimonial__avatar" aria-hidden="true">
-                    AO
+                    AH
                   </span>
                   <span>
                     Abdul-Hameed Oladeji, ACA
@@ -308,44 +322,10 @@ export default function Page() {
               </figure>
               <figure className="testimonial">
                 <blockquote>
-                  Thank you very much Excel Academy for your help in Case Study. After Mr Ahmed explained what case study was about and gave me the format on how to write a report, all I did was study the format and the pre-seen analysis. Thank you for helping me pass Case Study at first sitting.
+                  I want to say a big thank you to the tutors of Excel Academy for their energetic efforts in preparing us for the exam. The online lectures, extra classes, mock exams and private sessions really went a long way in ensuring our success. I recommend Excel Academy to anyone preparing for ICAN or ATS exams.
                 </blockquote>
                 <figcaption>
-                  <span className="testimonial__avatar" aria-hidden="true">
-                    OT
-                  </span>
-                  <span>
-                    Onipede Toluwalase, ACA
-                    <small>
-                      November 2021 Batch
-                    </small>
-                  </span>
-                </figcaption>
-              </figure>
-              <figure className="testimonial">
-                <blockquote>
-                  I finally passed Advanced Taxation after 2 attempts. I registered with Excel Academy on my 3rd attempt, I was really encouraged and tutored accordingly. I recommend Excel Academy to anyone preparing for ICAN Examinations.
-                </blockquote>
-                <figcaption>
-                  <span className="testimonial__avatar" aria-hidden="true">
-                    LO
-                  </span>
-                  <span>
-                    Lucy Peter Ojemen, ACA
-                    <small>
-                      November 2021 Batch
-                    </small>
-                  </span>
-                </figcaption>
-              </figure>
-              <figure className="testimonial">
-                <blockquote>
-                  I want to say a big thank you to the tutors of Excel Academy for their energetic efforts in preparing us for the exam. The online lectures, extra classes, mock exams and private sessions really went a long way in ensuring our success.
-                </blockquote>
-                <figcaption>
-                  <span className="testimonial__avatar" aria-hidden="true">
-                    AA
-                  </span>
+                  <img className="testimonial__avatar" src="/img/testimonials/s3.jpg" alt="" width={48} height={48} loading="lazy" style={{ objectFit: "cover" }} />
                   <span>
                     Adedeji Adedamola, AAT, ACA
                     <small>
@@ -356,12 +336,24 @@ export default function Page() {
               </figure>
               <figure className="testimonial">
                 <blockquote>
+                  Congratulations to me. I&apos;m now an ACA. Thank you so much Mr Ahmed, God bless you. You made this work out with God&apos;s strength.
+                </blockquote>
+                <figcaption>
+                  <img className="testimonial__avatar" src="/img/testimonials/s4.jpg" alt="" width={48} height={48} loading="lazy" style={{ objectFit: "cover" }} />
+                  <span>
+                    Ojatunwase Emmanuel, ACA
+                    <small>
+                      May 2022 Batch
+                    </small>
+                  </span>
+                </figcaption>
+              </figure>
+              <figure className="testimonial">
+                <blockquote>
                   Ahmed, I passed. Thank you so much. Your suggested solution to the Case Study pre-seen really went a long way. I was really wowed by your analysis of the pre-seen.
                 </blockquote>
                 <figcaption>
-                  <span className="testimonial__avatar" aria-hidden="true">
-                    PO
-                  </span>
+                  <img className="testimonial__avatar" src="/img/testimonials/s5.jpg" alt="" width={48} height={48} loading="lazy" style={{ objectFit: "cover" }} />
                   <span>
                     Placidus Obi, ACA
                     <small>
@@ -372,12 +364,10 @@ export default function Page() {
               </figure>
               <figure className="testimonial">
                 <blockquote>
-                  Many thanks to you my teacher. I have been writing only Case Study since 2019. May Almighty God bless you greatly. I am now qualified.
+                  Many thanks to you my teacher. I just met you and God used you to deliver me from Case Study. I have been writing only Case Study since 2019. May Almighty God bless you greatly. I am now qualified.
                 </blockquote>
                 <figcaption>
-                  <span className="testimonial__avatar" aria-hidden="true">
-                    NU
-                  </span>
+                  <img className="testimonial__avatar" src="/img/testimonials/s6.jpg" alt="" width={48} height={48} loading="lazy" style={{ objectFit: "cover" }} />
                   <span>
                     Nse Umoh-Daniel, ACA
                     <small>
@@ -388,12 +378,10 @@ export default function Page() {
               </figure>
               <figure className="testimonial">
                 <blockquote>
-                  My investment of 10k was worth it, I aced Case Study. I attempted it for the first time and I passed with God’s help through Mr Ahmed. Thank you very much.
+                  My investment of 10k was worth it ooo, I aced Case Study. I attempted it for the first time and I passed with God&apos;s help through Mr Ahmed. Thank you very much.
                 </blockquote>
                 <figcaption>
-                  <span className="testimonial__avatar" aria-hidden="true">
-                    LR
-                  </span>
+                  <img className="testimonial__avatar" src="/img/testimonials/s7.jpg" alt="" width={48} height={48} loading="lazy" style={{ objectFit: "cover" }} />
                   <span>
                     Lasisi Rasheedat, ACA
                     <small>
@@ -404,14 +392,26 @@ export default function Page() {
               </figure>
               <figure className="testimonial">
                 <blockquote>
-                  Thank you so much for the online coaching and exam guide. I passed Case Study and I’m now a qualified Chartered Accountant. Thank you so much Mr Ahmed.
+                  Thank you so much for the online coaching and exam guide. I passed Case Study and I&apos;m now a qualified Chartered Accountant. Thank you so much Mr Ahmed.
                 </blockquote>
                 <figcaption>
-                  <span className="testimonial__avatar" aria-hidden="true">
-                    MO
-                  </span>
+                  <img className="testimonial__avatar" src="/img/testimonials/s8.jpg" alt="" width={48} height={48} loading="lazy" style={{ objectFit: "cover" }} />
                   <span>
                     Muyiwa Olubo, ACA
+                    <small>
+                      May 2022 Batch
+                    </small>
+                  </span>
+                </figcaption>
+              </figure>
+              <figure className="testimonial">
+                <blockquote>
+                  I really appreciate you and the entire tutors of Excel Academy for your contributions towards my success. I&apos;m so glad I passed PM at the 5th attempt.
+                </blockquote>
+                <figcaption>
+                  <img className="testimonial__avatar" src="/img/testimonials/s9.jpg" alt="" width={48} height={48} loading="lazy" style={{ objectFit: "cover" }} />
+                  <span>
+                    Aladetuyi Ayodele, ACA
                     <small>
                       May 2022 Batch
                     </small>
